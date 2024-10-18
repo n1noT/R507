@@ -60,6 +60,7 @@ let clock = new THREE.Clock();
 
 // Animation loop
 gsap.ticker.add(() => {
+
         let deltaTime = clock.getDelta();
 
         for (let i = 0; i < 5; i++) {
@@ -72,6 +73,8 @@ gsap.ticker.add(() => {
 
             if (particles[i].finished()) {
               particles.splice(i, 1);
+              scene.remove(particles[i].mesh);  
+
             }
           }
 
