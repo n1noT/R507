@@ -30,7 +30,8 @@ light.shadow.camera.bottom = -100;
 
 // Create a camera
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set(0, 15, 30);
+camera.position.set(0, 30, 0);
+camera.lookAt(0, 0, 0);
 
 // Tableau des Id des particules disponibles
 let availableParticles = [];
@@ -51,13 +52,17 @@ for (let i = 0; i < N; i++) {
 
 geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
 
+const textureLoader = new THREE.TextureLoader();
+const texture = textureLoader.load('spark1.png');
+
 let material = new THREE.PointsMaterial({ 
-    color: 0xff0000, 
-    size: 1, 
+    map: texture, 
+    size: 4, 
     transparent: true, 
     opacity: 1.0,
     alphaTest: 0.05,
-    sizeAttenuation: true 
+    sizeAttenuation: true,
+    depthWrite: false,
 });
 
 scene.add(new THREE.Points(geometry, material));
@@ -85,9 +90,9 @@ gsap.ticker.add(() => {
             for (let i = 0; i < 10; i++) {
                 let particleId = availableParticles[0];
                 let vel = new THREE.Vector3(
-                    (Math.random()*20)  - 10 , 
+                    (Math.random()*4)  - 2 , 
                     (Math.random() * 10) + 10, 
-                    (Math.random()*20) - 10 
+                    (Math.random()*4) - 2 
                 );
                 let p = new Particle (emitterPos, vel, vertices, particleId);
                 activeParticles.push(p);
